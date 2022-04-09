@@ -1,4 +1,5 @@
 # Import Splinter, BeautifulSoup, and Pandas
+from curses.panel import new_panel
 from splinter import Browser
 from bs4 import BeautifulSoup as soup
 import pandas as pd
@@ -17,7 +18,7 @@ def scrape_all():
     data = {
         "news_title": news_title,
         "news_paragraph": news_paragraph,
-        "featured_image": featured_image(browser),
+        "featured_image": featured_img_url(browser),
         "facts": mars_facts(),
         "hemispheres": hemispheres(browser),
         "last_modified": dt.datetime.now()
@@ -48,7 +49,8 @@ def mars_news(browser):
         # Use the parent element to find the first 'a' tag and save it as 'news_title'
         news_title = slide_elem.find("div", class_="content_title").get_text()
         # Use the parent element to find the paragraph text
-        news_p = slide_elem.find("div", class_="article_teaser_body").get_text()
+        news_p = slide_elem.find(
+            "div", class_="article_teaser_body").get_text()
 
     except AttributeError:
         return None, None
